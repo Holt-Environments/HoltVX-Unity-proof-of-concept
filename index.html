@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | HoltVille</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="./unity_export/UnityLoader.js"></script>
+    <script src="script/he_modal.js"></script>
+    <script>
+
+      // A reference to the running unity instance on the page
+      var unity_instance = UnityLoader.instantiate("unityContainer", "./unity_export/unity_export.json");
+
+      window.onload = async function (){
+        document.getElementById("modal_close_button").addEventListener("click",  function () {
+
+          CloseModal("modal");
+
+          // "Toolbox" is a reference to the object in the scene of the same ID, because the Bridge
+          // class is instantiated on that (what should be a non-mesh) object.
+          // The message being sent is the function to be called, in this case, CloseModal() defined
+          // in the script Bridge.cs
+          unity_instance.SendMessage("Toolbox", "CloseModal");
+        });
+      };
+
+    </script>
+    <style>
+  
+      #unityContainer{
+        margin: 0 !important;
+        margin-top: calc(calc(100vh - calc(100vh - 100px)) / 2) !important;
+      }
+
+    </style>
+  </head>
+  <body style="background: #151515; margin: 0;">
+    <div id="modal_root" style="width: 100%; height: 100%; overflow: hidden;">
+      <div id="modal">
+          <div id="modal_content">
+              <div id="modal_info">
+              </div>
+              <button id="modal_close_button">X</button> 
+          </div>
+      </div>
+    </div>
+    <div id="unityContainer" style="width: 100%; height: calc(100vh - 100px);"></div>
+    <div style="text-align:center; width: 100%; color: rgb(116, 116, 116); font-family:Arial, Helvetica, sans-serif, monospace; font-size: small;"><p>HoltVille Interactive Experience by <b>Holt Environments</b> 2020</p></div>
+  </body>
+</html>
